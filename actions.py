@@ -7,8 +7,8 @@ base_url = 'https://api.meraki.com/api/v0'
 header = {"X-Cisco-Meraki-API-Key": api_key, "Content-Type": "application/json"}
 
 def get_orgs():
-	counter = 0
 	org_id_list =[]
+	counter = 0
 
 	url = f'{base_url}/organizations' #URL 
 	get_organizations = requests.get (url, headers = header) #Actual API Call
@@ -30,13 +30,15 @@ def get_orgs():
 
 def get_organization_networks(org_id):
 	organization = org_id
+	counter = 0 
+
 	url = f'{base_url}/organizations/{organization}/networks' #URL 
 	get_networks = requests.get (url, headers = header) #Actual API Call
 	networks = get_networks.json() #response is loaded as json and saved to variable 
-
+	
 	print ("Networks: ")
 	for n in networks: 
-
+		counter += 1 
 		print(n['id'])
 
 def get_uplink_loss_and_latency(org_id):
@@ -50,9 +52,13 @@ def get_uplink_loss_and_latency(org_id):
 			print (str(k) + " : " + str(v))
 	#print(uplinksLossAndLatency)
 	
+def pretty(json_response):
+	print (json.dumps(json_response, indent=4, sort_keys=True))
 
-#get_orgs()
+
+#pretty(get_orgs())
 #get_uplink_loss_and_latency(838073)
+
 
 
 #payload = {"enabled":"false"}
