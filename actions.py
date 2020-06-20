@@ -39,7 +39,7 @@ def get_organization_networks(org_id):
 	print ("Networks: ")
 	for n in networks: 
 		counter += 1 
-		print(n['id'])
+		print(n['name'] + " - " + n['id'])
 
 def get_uplink_loss_and_latency(org_id):
 	organization = org_id
@@ -49,11 +49,17 @@ def get_uplink_loss_and_latency(org_id):
 
 	for lines in uplinksLossAndLatency: 
 		for k, v in lines.items(): 
-			print (str(k) + " : " + str(v))
+
+			if k == 'timeSeries':
+				print (str(k) + " : ")
+				print (pretty(v))
+			else: 
+				print (str(k) + " : " + str(v))
 	#print(uplinksLossAndLatency)
 	
 def pretty(json_response):
-	print (json.dumps(json_response, indent=4, sort_keys=True))
+	pretty_print = json.dumps(json_response, indent=4, sort_keys=True)
+	return pretty_print
 
 
 #pretty(get_orgs())
